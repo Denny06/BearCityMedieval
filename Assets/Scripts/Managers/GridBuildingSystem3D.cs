@@ -16,10 +16,12 @@ public class GridBuildingSystem3D : MonoBehaviour {
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList /* = null */;
     private PlacedObjectTypeSO placedObjectTypeSO;
     private PlacedObjectTypeSO.Dir dir;
+    public bool ModoConstrucion { get; set; }
+    private Vector3 pocisionPorConstruir;
 
     private void Awake() {
         Instance = this;
-
+        ModoConstrucion = false;
         int gridWidth = 10;
         int gridHeight = 10;
         float cellSize = 10f;
@@ -67,13 +69,12 @@ public class GridBuildingSystem3D : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0) && placedObjectTypeSO != null) {
+        if (Input.GetMouseButtonDown(0) && placedObjectTypeSO != null) 
+        {
             Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
             grid.GetXZ(mousePosition, out int x, out int z);
-
             Vector2Int placedObjectOrigin = new Vector2Int(x, z);
             placedObjectOrigin = grid.ValidateGridPosition(placedObjectOrigin);
-
             // Test Can Build
             List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(placedObjectOrigin, dir);
             bool canBuild = true;
@@ -103,9 +104,11 @@ public class GridBuildingSystem3D : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) {
-            dir = PlacedObjectTypeSO.GetNextDir(dir);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RotarEdificiosPorConstruir();
         }
+
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }
         if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; RefreshSelectedObjectType(); }
@@ -113,7 +116,6 @@ public class GridBuildingSystem3D : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = placedObjectTypeSOList[3]; RefreshSelectedObjectType(); }
         if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = placedObjectTypeSOList[4]; RefreshSelectedObjectType(); }
         if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = placedObjectTypeSOList[5]; RefreshSelectedObjectType(); }
-
         if (Input.GetKeyDown(KeyCode.Alpha0)) { DeselectObjectType(); }
 
 
@@ -172,6 +174,52 @@ public class GridBuildingSystem3D : MonoBehaviour {
 
     public PlacedObjectTypeSO GetPlacedObjectTypeSO() {
         return placedObjectTypeSO;
+    }
+    public void RotarEdificiosPorConstruir(){
+         dir = PlacedObjectTypeSO.GetNextDir(dir);
+    }
+
+    public void ConstruirEdificio1(){
+        placedObjectTypeSO = placedObjectTypeSOList[0]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void ConstruirEdificio2(){
+        placedObjectTypeSO = placedObjectTypeSOList[1]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void ConstruirEdificio3(){
+        placedObjectTypeSO = placedObjectTypeSOList[2]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void ConstruirEdificio4(){
+        placedObjectTypeSO = placedObjectTypeSOList[3]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void ConstruirEdificio5(){
+        placedObjectTypeSO = placedObjectTypeSOList[4]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void ConstruirEdificio6(){
+        placedObjectTypeSO = placedObjectTypeSOList[5]; 
+        RefreshSelectedObjectType();
+    }
+
+    public void SubirPocisionEnX(){
+
+    }
+    public void BajarPocisionEnX(){
+        
+    }
+    public void SubirPocisionEnY(){
+        
+    }
+    public void BajarPocisionEnY(){
+        
     }
 
 }
