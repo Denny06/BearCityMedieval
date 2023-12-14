@@ -48,7 +48,7 @@ public class MenuDespegable : MonoBehaviour
       /*   int signo = 1; */
         if (!abrirMenu)
         {
-            MoverMenu(tiempoDeRecorrido, menuDespegable.position, new Vector3(16, menuDespegable.position.y, 0));
+            MoverMenu(tiempoDeRecorrido, menuDespegable.position, new Vector3(0, menuDespegable.position.y, 0));
         }else{
             MoverMenu(tiempoDeRecorrido, menuDespegable.position, new Vector3(-Screen.width / 2, menuDespegable.position.y, 0));
         }

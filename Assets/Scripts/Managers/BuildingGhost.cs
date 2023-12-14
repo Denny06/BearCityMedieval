@@ -8,21 +8,39 @@ public class BuildingGhost : MonoBehaviour {
     private PlacedObjectTypeSO placedObjectTypeSO;
 
     private void Start() {
-        RefreshVisual();
+        /* RefreshVisual();*/
 
-        GridBuildingSystem3D.Instance.OnSelectedChanged += Instance_OnSelectedChanged;
+        GridBuildingSystem3D.Instance.OnSelectedChanged += Instance_OnSelectedChanged; 
     }
 
     private void Instance_OnSelectedChanged(object sender, System.EventArgs e) {
         RefreshVisual();
+        Debug.Log("BuildingGhost");
     }
 
-    private void LateUpdate() {
-        Vector3 targetPosition = GridBuildingSystem3D.Instance.GetMouseWorldSnappedPosition();
-        targetPosition.y = 1f;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
+    private void Update() {
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem3D.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 targetPosition = GridBuildingSystem3D.Instance.GetMouseWorldSnappedPosition();
+        
+        targetPosition.y = 2f;
+        transform.position = targetPosition;
+            
+
+        /* transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem3D.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f); */
+        transform.rotation = GridBuildingSystem3D.Instance.GetPlacedObjectRotation();
+        }
+
+        if(Input.touchCount == 1)
+        {
+            Vector3 targetPosition = GridBuildingSystem3D.Instance.GetMouseWorldSnappedPosition();
+        
+            targetPosition.y = 1f;
+            transform.position = targetPosition;
+            transform.rotation = GridBuildingSystem3D.Instance.GetPlacedObjectRotation();
+        }
+        
     }
 
     private void RefreshVisual() {
