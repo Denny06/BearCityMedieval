@@ -4,5 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Pueblo.unity
+    guid: c503e96c2d4950f49b5981009a975b67
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
