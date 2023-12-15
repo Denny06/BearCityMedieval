@@ -20,6 +20,9 @@ public class BuildingGhost : MonoBehaviour {
 
     private void Update() {
 
+
+        
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 targetPosition = GridBuildingSystem3D.Instance.GetMouseWorldSnappedPosition();

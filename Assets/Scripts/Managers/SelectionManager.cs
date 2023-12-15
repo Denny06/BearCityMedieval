@@ -42,7 +42,7 @@ public class SelectionManager : MonoBehaviour
             }
         }
         //Android 
-        if(Input.touchCount == 1)
+        if(Input.touchCount == 2)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit, longitudInfinita, layerMaskPersonaje))

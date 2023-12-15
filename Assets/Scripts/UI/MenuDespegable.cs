@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class MenuDespegable : MonoBehaviour
 {
+    public static MenuDespegable Instance { get; private set; }
 
     [SerializeField] private RectTransform menuDespegable;
     private float posicionFinal;
     private bool abrirMenu;
     [SerializeField] private float tiempoDeRecorrido;
     // Start is called before the first frame update
+
+
+    private void Awake() {
+       
+        Instance = this;
+    }
     void Start()
     {
       /*   posicionFinal =  menuDespegable.rect.width;
@@ -44,7 +51,8 @@ public class MenuDespegable : MonoBehaviour
         StartCoroutine(Mover(time, posInit, posFin));
     }
 
-    public void BottonActivarMenuDespegable(){
+    public void BottonActivarMenuDespegable()
+    {
       /*   int signo = 1; */
         if (!abrirMenu)
         {
