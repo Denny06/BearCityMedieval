@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using UnityEngine.EventSystems;
 
 public class GridBuildingSystem3D : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class GridBuildingSystem3D : MonoBehaviour {
     private PlacedObjectTypeSO.Dir dir;
     public bool ModoConstrucion { get; set; }
     private Vector3 pocisionPorConstruir;
+
+    private  Vector3 mousePosition;
 
     private void Awake() {
         Instance = this;
@@ -90,10 +93,10 @@ public class GridBuildingSystem3D : MonoBehaviour {
 
 
         if (Input.GetMouseButtonDown(1)) {
-            Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
-            if (grid.GetGridObject(mousePosition) != null) {
+            Vector3 mousePositionDeleteBuilding = Mouse3D.GetMouseWorldPosition();
+            if (grid.GetGridObject(mousePositionDeleteBuilding) != null) {
                 // Valid Grid Position
-                PlacedObject_Done placedObject = grid.GetGridObject(mousePosition).GetPlacedObject();
+                PlacedObject_Done placedObject = grid.GetGridObject(mousePositionDeleteBuilding).GetPlacedObject();
                 if (placedObject != null) {
                     // Demolish
                     placedObject.DestroySelf();
@@ -122,7 +125,12 @@ public class GridBuildingSystem3D : MonoBehaviour {
     }
 
     public Vector3 GetMouseWorldSnappedPosition() {
-        Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
+
+        if (IsMouseOverUI())
+        {
+            return mousePosition;
+        }
+        /* Vector3  */mousePosition = Mouse3D.GetMouseWorldPosition();
         grid.GetXZ(mousePosition, out int x, out int z);
        /*  Debug.Log(mousePosition); */
 
@@ -151,7 +159,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         {
             return;
         }
-         Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
+         /* Vector3 mousePosition = Mouse3D.GetMouseWorldPosition(); */
             grid.GetXZ(mousePosition, out int x, out int z);
             Vector2Int placedObjectOrigin = new Vector2Int(x, z);
             placedObjectOrigin = grid.ValidateGridPosition(placedObjectOrigin);
@@ -178,18 +186,23 @@ public class GridBuildingSystem3D : MonoBehaviour {
                 OnObjectPlaced?.Invoke(this, EventArgs.Empty);
 
                 DeselectObjectType();
+             
             } else {
                 // Cannot build here
                 UtilsClass.CreateWorldTextPopup("No se puede construir!", mousePosition);
             }
     }
+
+
     public void RotarEdificiosPorConstruir(){
          dir = PlacedObjectTypeSO.GetNextDir(dir);
     }
 
     public void ConstruirEdificio1(){
+         MenuDespegable.Instance.BottonActivarMenuDespegable();
         placedObjectTypeSO = placedObjectTypeSOList[0]; 
         RefreshSelectedObjectType();
+          
     }
 
     public void ConstruirEdificio2(){
@@ -217,17 +230,9 @@ public class GridBuildingSystem3D : MonoBehaviour {
         RefreshSelectedObjectType();
     }
 
-    public void SubirPocisionEnX(){
+    public bool IsMouseOverUI(){
+        return EventSystem.current.IsPointerOverGameObject();
+    }
 
-    }
-    public void BajarPocisionEnX(){
-        
-    }
-    public void SubirPocisionEnY(){
-        
-    }
-    public void BajarPocisionEnY(){
-        
-    }
 
 }
